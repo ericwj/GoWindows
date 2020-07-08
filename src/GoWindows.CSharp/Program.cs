@@ -20,25 +20,26 @@ namespace GoWindows.CSharp
 	/// end
 	/// </code>
 	/// <para>The response will look like this:</para>
-	/// <code>
+	/// <para><code>
 	/// \n
 	/// message: bla\n
 	/// error: (n/a)\n
-	/// </code>
+	/// </code></para>
 	/// <para>Special values are</para>
 	/// <list type="bullet">
-	/// <item><c>#errors#</c> for errors, to distinguish between them and normal strings</item>
-	/// <item><c>(n/a)</c> for null strings</item>
-	/// <item>For string arrays:
+	/// <item><para><c>#errors#</c> for errors, to distinguish between them and normal strings</para></item>
+	/// <item><para><c>(n/a)</c> for null strings</para></item>
+	/// <item><para>
+	/// For string arrays:
 	/// <code>
 	/// paramname: item1\n
 	/// paramname: item2\n
 	/// paramname: (n/a)\n
 	/// paramname: end
 	/// </code>
-	/// </item>
+	/// </para></item>
 	/// </list>
-	/// Where \n is the operating system newline character(s).
+	/// <para>Where \n is the operating system newline character(s).</para>
 	/// </summary>
 	internal class Program
 	{
