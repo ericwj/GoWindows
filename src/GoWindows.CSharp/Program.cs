@@ -90,19 +90,19 @@ namespace GoWindows.CSharp
 				case null: goto EndOfStream;
 				case nameof(filepath.Abs):				arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.Base):				arguments = new [] { nameof(path) }; break;
-				case nameof(filepath.Clean):				arguments = new [] { nameof(path) }; break;
+				case nameof(filepath.Clean):			arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.Dir):				arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.EvalSymlinks):		arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.Ext):				arguments = new [] { nameof(path) }; break;
-				case nameof(filepath.FromSlash):			arguments = new [] { nameof(path) }; break;
+				case nameof(filepath.FromSlash):		arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.Glob):				arguments = new [] { nameof(path) }; break;
-				case nameof(filepath.HasPrefix):			arguments = new [] { nameof(p), nameof(path) }; break;
-				case nameof(filepath.IsAbs):				arguments = new [] { nameof(path) }; break;
+				case nameof(filepath.HasPrefix):		arguments = new [] { nameof(p), nameof(path) }; break;
+				case nameof(filepath.IsAbs):			arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.Join):				arguments = new [] { nameof(paths) }; break;
-				case nameof(filepath.Match):				arguments = new [] { nameof(pattern), nameof(path) }; break;
+				case nameof(filepath.Match):			arguments = new [] { nameof(pattern), nameof(path) }; break;
 				case nameof(filepath.Rel):				arguments = new [] { nameof(basepath), nameof(targpath) }; break;
-				case nameof(filepath.Split):				arguments = new [] { nameof(path) }; break;
-				case nameof(filepath.SplitList):			arguments = new [] { nameof(path) }; break;
+				case nameof(filepath.Split):			arguments = new [] { nameof(path) }; break;
+				case nameof(filepath.SplitList):		arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.ToSlash):			arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.VolumeName):		arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.Walk):				arguments = new [] { nameof(root), nameof(walkfn) }; break;
@@ -116,7 +116,7 @@ namespace GoWindows.CSharp
 					if (line is null) goto EndOfStream;
 					if (!TryParse(line, out var temp, expected)) goto InvalidArgument;
 					switch (expected) {
-					case nameof(basepath):	basepath = temp; break;	
+					case nameof(basepath):	basepath = temp; break;
 					case nameof(targpath):	targpath = temp; break;
 					case nameof(p):			p = temp; break;
 					case nameof(pattern):	pattern = temp; break;
