@@ -4,7 +4,7 @@ using System.IO;
 namespace GoWindows.CSharp.go.path
 {
 	/// <summary>type WalkFunc</summary>
-	public delegate err WalkFunc(string path, os.FileInfo info, err error);
+	public delegate err WalkFunc(string path, os.FileInfo info, error error);
 	/// <summary>Plublic API as an interface such that it can be swapped for another
 	/// <para>Using C#'s feature Default Interface Implementation for now</para></summary>
 	public interface filepath
@@ -59,5 +59,6 @@ namespace GoWindows.CSharp.go.path
 				walkFn(entry, new os.WrappedFileInfo(entry), null);
 			return null;
 		}
+		#endregion
 	}
 }
