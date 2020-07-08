@@ -1,0 +1,11 @@
+.vs/
+artifacts/
+/*.sdf
+/*.VC.opendb
+**/[Oo]bj/
+**/[Bb]in/[Dd]ebug/
+**/[Bb]in/[Rr]elease/
+*.winmd
+*.user
+project.lock.json
+*/*/*.log

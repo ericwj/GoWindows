@@ -1,0 +1,17 @@
+﻿body
+{
+	color: forestgreen;
+	background-color: black;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 12pt;
+	margin: 2em;
+}
+a {
+	color: orange;
+}
+a:hover {
+	color: darkorange;
+}
+code {
+	color: orange;
+}

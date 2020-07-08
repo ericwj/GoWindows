@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30223.230
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C594173B-4F8C-4ACD-9F62-DED6E1F44260}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoWindows.CSharp", "src\GoWindows.CSharp\GoWindows.CSharp.csproj", "{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3CC79B43-E675-40D6-B6E2-E9C6FCB19F08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoWindows.Tests", "test\GoWindows.Tests\GoWindows.Tests.csproj", "{85391A21-A5FD-4392-871B-7ECAF89ADB39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{54A8583C-AC40-4DA6-AA5C-EAA12E743265}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		md-styles.css = md-styles.css
+		build\Version.props = build\Version.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|x64.Build.0 = Debug|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|x86.Build.0 = Debug|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|x64.ActiveCfg = Release|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|x64.Build.0 = Release|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|x86.ActiveCfg = Release|Any CPU
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|x86.Build.0 = Release|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Debug|x64.Build.0 = Debug|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Debug|x86.Build.0 = Debug|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Release|x64.ActiveCfg = Release|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Release|x64.Build.0 = Release|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Release|x86.ActiveCfg = Release|Any CPU
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5} = {C594173B-4F8C-4ACD-9F62-DED6E1F44260}
+		{85391A21-A5FD-4392-871B-7ECAF89ADB39} = {3CC79B43-E675-40D6-B6E2-E9C6FCB19F08}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10BD17A8-FA2D-4291-A4EB-FEEC34215CA7}
+	EndGlobalSection
+EndGlobal

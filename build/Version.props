@@ -1,0 +1,70 @@
+<Project ToolsVersion="15.0">
+	<PropertyGroup>
+		<VersionSuffixDate>$([System.DateTime]::Now.ToString(`yyyyMMdd`))</VersionSuffixDate>
+		<VersionSuffixTime>$([System.Int32]::Parse($([System.DateTime]::Now.ToString(`HHmm`))))</VersionSuffixTime>
+		<VersionPrefix Condition=" '$(VersionPrefix)' == '' ">1.0.0</VersionPrefix>
+		<VersionSuffix Condition=" '$(VersionSuffix)' == '' ">dev-$(VersionSuffixDate).$(VersionSuffixTime)</VersionSuffix>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(SolutionDir)' == '' ">
+		<SolutionDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</SolutionDir>
+	</PropertyGroup>
+	<PropertyGroup>
+		<PackageOutputPath>$(SolutionDir)packages</PackageOutputPath>
+		<RestoreAdditionalProjectSources>
+			$(SolutionDir)packages;
+			$(RestoreAdditionalProjectSources)
+		</RestoreAdditionalProjectSources>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ApplicationIcon Condition="Exists('wwwroot\favicon.ico')">wwwroot\favicon.ico</ApplicationIcon>
+		<Authors>Eric Jonker</Authors>
+		<Company>ericjonker.com</Company>
+		<Copyright>Copyright © 2019-2020 Eric Jonker. All rights reserved.</Copyright>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageProjectUrl/>
+		<PackageTags>$(MSBuildProjectName.Split('.'))</PackageTags>
+		<Product/>
+		<RepositoryUrl/>
+		<RepositoryType>Git</RepositoryType>
+		<UserSecretsId Condition=" '$(UserSecretsId)' == '' ">$(MSBuildProjectName)</UserSecretsId>
+		<NoWarn Condition=" '$(Configuration)' == 'Debug' ">$(NoWarn);IDE0059;IDE0060;IDE0061</NoWarn>
+		<NoWarn>$(NoWarn);IDE1006</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace>$(MSBuildProjectName)</RootNamespace>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworkLatest>netcoreapp3.1</TargetFrameworkLatest>
+		<TargetFrameworkPreview>net5.0</TargetFrameworkPreview>
+		<SingleTargetFramework>$(TargetFrameworkLatest)</SingleTargetFramework>
+	</PropertyGroup>
+	<PropertyGroup>
+		<!--<LibraryTargetFrameworks>netstandard2.0;netstandard2.1</LibraryTargetFrameworks>-->
+		<LibraryTargetFrameworks>$(SingleTargetFramework)</LibraryTargetFrameworks>
+		<TestTargetFrameworks>$(SingleTargetFramework)</TestTargetFrameworks>
+		<ExeTargetFrameworks>$(SingleTargetFramework)</ExeTargetFrameworks>
+
+		<LangVersion>latest</LangVersion>
+		<LangVersion Condition=" '$(SingleTargetFramework)' == '$(TargetFrameworkLatest)' ">preview</LangVersion>
+		<LangVersion Condition=" '$(SingleTargetFramework)' == '$(TargetFrameworkPreview)' ">preview</LangVersion>
+		<NoWarn Condition=" '$(LangVersion)' == 'preview' ">$(NoWarn);CS8652</NoWarn>
+		<TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+		<TieredCompilation Condition=" '$(Configuration)|$(TieredCompilation)' == 'Release|' ">true</TieredCompilation>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(TargetFramework)' == '$(TargetFrameworkLatest)' ">
+		<!--Version of standard BCL packages such as System.Collections.Generic-->
+		<BclVersion>4.3.0</BclVersion>
+		<!--Version of SafeUnsafe-->
+		<SafeVersion>2.0.0-*</SafeVersion>
+		<!--Version of Specimen.Build-->
+		<SpecimenVersion>1.0.0-*</SpecimenVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(TargetFramework)' == '$(TargetFrameworkPreview)' ">
+		<!--Version of standard BCL packages such as System.Collections.Generic-->
+		<BclVersion>4.3.0</BclVersion>
+		<!--Version of SafeUnsafe-->
+		<SafeVersion>2.0.0-*</SafeVersion>
+		<!--Version of Specimen.Build-->
+		<SpecimenVersion>1.0.0-*</SpecimenVersion>
+	</PropertyGroup>
+</Project>
