@@ -88,6 +88,10 @@ namespace GoWindows.CSharp
 				// Collect the parameter names expected
 				switch (command) {
 				case null: goto EndOfStream;
+				case nameof(filepath.Separator):		arguments = Array.Empty<string>(); break;
+				case nameof(filepath.ListSeparator):	arguments = Array.Empty<string>(); break;
+				case nameof(filepath.ErrBadPattern):	arguments = Array.Empty<string>(); break;
+				case nameof(filepath.SkipDir):			arguments = Array.Empty<string>(); break;
 				case nameof(filepath.Abs):				arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.Base):				arguments = new [] { nameof(path) }; break;
 				case nameof(filepath.Clean):			arguments = new [] { nameof(path) }; break;
@@ -139,6 +143,7 @@ namespace GoWindows.CSharp
 				}
 				// resolve the string walkfn to an actual WalkFunc implementation
 				switch (walkfn) {
+				case null: walk = null; break;
 				case nameof(EmptyWalk): walk = EmptyWalk; break;
 				case nameof(DefaultWalk): walk = DefaultWalk; break;
 				default:
@@ -147,13 +152,18 @@ namespace GoWindows.CSharp
 				}
 				// define return value variables
 				string message = null, result = null, dir = null, file = null;
-				error err = null;
+				char Separator = default, ListSeparator = default; // '\0'
+				error err = null, ErrBadPattern = null, SkipDir = null;
 				bool yes = default;
 				string[] split = null, matches = null;
 
 				// now collect the result values
 				switch (command) {
 				case null: goto EndOfStream;
+				case nameof(filepath.Separator):		Separator			= impl.Separator;				Report(command, (nameof(result), Separator));						break;
+				case nameof(filepath.ListSeparator):	ListSeparator		= impl.ListSeparator;			Report(command, (nameof(result), ListSeparator));					break;
+				case nameof(filepath.ErrBadPattern):	ErrBadPattern		= impl.ErrBadPattern;			Report(command, (nameof(result), ErrBadPattern));					break;
+				case nameof(filepath.SkipDir):			SkipDir				= impl.SkipDir;					Report(command, (nameof(result), SkipDir));							break;
 				case nameof(filepath.Abs):				(message, err)		= impl.Abs(path);				Report(command, (nameof(message), message), (nameof(err), err));	break;
 				case nameof(filepath.Base):				result				= impl.Base(path);				Report(command, (nameof(result), result));							break;
 				case nameof(filepath.Clean):			result				= impl.Clean(path);				Report(command, (nameof(result), result));							break;
@@ -193,6 +203,7 @@ namespace GoWindows.CSharp
 				Write(": ");
 				switch (arg.value) {
 				case bool b: WriteLine(b ? "true" : "false"); break;
+				case char c: WriteLine(Format(c.ToString())); break;
 				case string s: WriteLine(Format(s)); break;
 				case err r: WriteLine($"#{r.Error}#"); break;
 				case string[] strings:
@@ -218,6 +229,7 @@ namespace GoWindows.CSharp
 			var actual = line.Substring(0, i);
 			if (expected != actual) goto Fail;
 			result = line.Substring(i + 2);
+			if (result == Null) result = null;
 			return true;
 		Fail:
 			result = null;
