@@ -38,8 +38,8 @@ func main() {
       var aOut tOutput
 
       switch aIn.Api {
-      case "filepath.Separator":     aOut.Result = filepath.Separator
-      case "filepath.ListSeparator": aOut.Result = filepath.ListSeparator
+      case "filepath.Separator":     aOut.Result = string(filepath.Separator)
+      case "filepath.ListSeparator": aOut.Result = string(filepath.ListSeparator)
       case "filepath.Abs":           aOut.Result, err = filepath.Abs(aIn.Path)
       case "filepath.EvalSymlinks":  aOut.Result, err = filepath.EvalSymlinks(aIn.Path)
       case "filepath.Glob":          aOut.Result, err = filepath.Glob(aIn.Pattern)
