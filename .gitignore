@@ -1,3 +1,5 @@
+**/go/**/*.exe
+
 .vs/
 artifacts/
 /*.sdf

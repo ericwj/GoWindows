@@ -22,6 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		build\Version.props = build\Version.props
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "go", "go", "{EA28531C-CB9A-4EC4-B03B-2CD6519642BE}"
+	ProjectSection(SolutionItems) = preProject
+		src\go\api.go = src\go\api.go
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +68,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5} = {C594173B-4F8C-4ACD-9F62-DED6E1F44260}
 		{85391A21-A5FD-4392-871B-7ECAF89ADB39} = {3CC79B43-E675-40D6-B6E2-E9C6FCB19F08}
+		{EA28531C-CB9A-4EC4-B03B-2CD6519642BE} = {C594173B-4F8C-4ACD-9F62-DED6E1F44260}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10BD17A8-FA2D-4291-A4EB-FEEC34215CA7}

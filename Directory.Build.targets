@@ -1,0 +1,40 @@
+<Project ToolsVersion="15.0">
+	<Target Name="BuildGo" BeforeTargets="CoreCompile"
+		Inputs="@(GoProject)"
+		Outputs="@(GoProject->$([System.IO.Path]::GetFullPath('$(OutDir)%(Filename).exe')))">
+		<Message Importance="normal" Text="GoProject: @(GoProject->'&quot;%(Identity)&quot;')" />
+		<Exec
+			Command="@where go"
+			ConsoleToMSBuild="true"
+			StandardOutputImportance="low">
+			<Output TaskParameter="ConsoleOutput" PropertyName="GoBinPath" />
+		</Exec>
+		<Error Condition="!Exists('$(GoBinPath)')" Code="2" File="@(GoProject)" Text="'go' was not found on the path."/>
+		<ItemGroup>
+			<GoProject>
+				<Go>$(GoBinPath)</Go>
+				<Build>%(Filename)%(Extension)</Build>
+				<ExeName>%(Filename).exe</ExeName>
+				<Exe>%(RelativeDir)%(Filename).exe</Exe>
+				<Out>$([System.IO.Path]::GetFullPath('$(OutDir)%(Filename).exe'))</Out>
+			</GoProject>
+		</ItemGroup>
+		<Exec
+			Command="@(GoProject->'%(Go) build %(Build)')"
+			LogStandardErrorAsError="true"
+			Outputs="@(GoProject->%(Exe))"
+			StandardErrorImportance="high"
+			StandardOutputImportance="high"
+			WorkingDirectory="@(GoProject->'%(RelativeDir)')"
+			/>
+		<Copy SourceFiles="@(GoProject->'%(Exe)')" DestinationFolder="$(OutDir)" />
+		<ItemGroup>
+			<AllItemsFullPathWithTargetPath Include="@(GoProject->%(Exe))">
+				<TargetPath>@(GoProject->'%(Out)')</TargetPath>
+				<!--<CopyToOutputDirectory>CopyAlways</CopyToOutputDirectory>-->
+				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			</AllItemsFullPathWithTargetPath>
+		</ItemGroup>
+		<Message Importance="high" Text="@(GoProject->'%(Build) -> %(Out)')" />
+	</Target>
+</Project>
