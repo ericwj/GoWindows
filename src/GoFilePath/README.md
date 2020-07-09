@@ -2,7 +2,7 @@
 
 Uses the executable produced from `api.go` in this repository.
 
-Use like so `. .\GoFilePath.ps1`, followed by:
+Use like so `. .\GoFilePath.ps1`, followed by lots of `Tab` presses:
 
 ```PowerShell
 get-gof<Tab> -<TabTab> -<TabTab> C:\<TabTab>
@@ -16,10 +16,20 @@ For more help:
 Get-Help Get-GoFilePath
 ```
 
+The alias is `gof`:
+
+```PowerShell
+Get-Help gof
+```
+
 ### Examples (PowerShell syntax)
 
 ```PowerShell
 PS> Get-GoFilePath -Abs .
+```
+
+```PowerShell
+PS> gof -IsAbs .
 ```
 
 ```PowerShell

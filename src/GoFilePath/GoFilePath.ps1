@@ -13,25 +13,25 @@ function Get-GoFilePath {
 	[CmdLetBinding()]
 #	[OutputType([Microsoft.VisualStudio.Setup.Instance])]
 	Param(
-		[Parameter(ParameterSetName = "Abs"				)] [switch]$Abs				= [switch]::new($false),
-		[Parameter(ParameterSetName = "Base"			)] [switch]$Base			= [switch]::new($false),
-		[Parameter(ParameterSetName = "Clean"			)] [switch]$Clean			= [switch]::new($false),
-		[Parameter(ParameterSetName = "Dir"				)] [switch]$Dir				= [switch]::new($false),
-		[Parameter(ParameterSetName = "EvalSymlinks"	)] [switch]$EvalSymlinks	= [switch]::new($false),
-		[Parameter(ParameterSetName = "Ext"				)] [switch]$Ext				= [switch]::new($false),
-		[Parameter(ParameterSetName = "FromSlash"		)] [switch]$FromSlash		= [switch]::new($false),
-		[Parameter(ParameterSetName = "Glob"			)] [switch]$Glob			= [switch]::new($false),
-		[Parameter(ParameterSetName = "IsAbs"			)] [switch]$IsAbs			= [switch]::new($false),
-		[Parameter(ParameterSetName = "Join"			)] [switch]$Join			= [switch]::new($false),
-		[Parameter(ParameterSetName = "ListSeparator"	)] [switch]$ListSeparator	= [switch]::new($false),
-		[Parameter(ParameterSetName = "Match"			)] [switch]$Match			= [switch]::new($false),
-		[Parameter(ParameterSetName = "Rel"				)] [switch]$Rel				= [switch]::new($false),
-		[Parameter(ParameterSetName = "Separator"		)] [switch]$Separator		= [switch]::new($false),
-		[Parameter(ParameterSetName = "Split"			)] [switch]$Split			= [switch]::new($false),
-		[Parameter(ParameterSetName = "SplitList"		)] [switch]$SplitList		= [switch]::new($false),
-		[Parameter(ParameterSetName = "ToSlash"			)] [switch]$ToSlash			= [switch]::new($false),
-		[Parameter(ParameterSetName = "VolumeName"		)] [switch]$VolumeName		= [switch]::new($false),
-		[Parameter(ParameterSetName = "Walk"			)] [switch]$Walk			= [switch]::new($false),
+		[Parameter(ParameterSetName = "Abs"				, Position = 0)] [switch]$Abs			= [switch]::new($false),
+		[Parameter(ParameterSetName = "Base"			, Position = 0)] [switch]$Base			= [switch]::new($false),
+		[Parameter(ParameterSetName = "Clean"			, Position = 0)] [switch]$Clean			= [switch]::new($false),
+		[Parameter(ParameterSetName = "Dir"				, Position = 0)] [switch]$Dir			= [switch]::new($false),
+		[Parameter(ParameterSetName = "EvalSymlinks"	, Position = 0)] [switch]$EvalSymlinks	= [switch]::new($false),
+		[Parameter(ParameterSetName = "Ext"				, Position = 0)] [switch]$Ext			= [switch]::new($false),
+		[Parameter(ParameterSetName = "FromSlash"		, Position = 0)] [switch]$FromSlash		= [switch]::new($false),
+		[Parameter(ParameterSetName = "Glob"			, Position = 0)] [switch]$Glob			= [switch]::new($false),
+		[Parameter(ParameterSetName = "IsAbs"			, Position = 0)] [switch]$IsAbs			= [switch]::new($false),
+		[Parameter(ParameterSetName = "Join"			, Position = 0)] [switch]$Join			= [switch]::new($false),
+		[Parameter(ParameterSetName = "ListSeparator"	, Position = 0)] [switch]$ListSeparator	= [switch]::new($false),
+		[Parameter(ParameterSetName = "Match"			, Position = 0)] [switch]$Match			= [switch]::new($false),
+		[Parameter(ParameterSetName = "Rel"				, Position = 0)] [switch]$Rel			= [switch]::new($false),
+		[Parameter(ParameterSetName = "Separator"		, Position = 0)] [switch]$Separator		= [switch]::new($false),
+		[Parameter(ParameterSetName = "Split"			, Position = 0)] [switch]$Split			= [switch]::new($false),
+		[Parameter(ParameterSetName = "SplitList"		, Position = 0)] [switch]$SplitList		= [switch]::new($false),
+		[Parameter(ParameterSetName = "ToSlash"			, Position = 0)] [switch]$ToSlash		= [switch]::new($false),
+		[Parameter(ParameterSetName = "VolumeName"		, Position = 0)] [switch]$VolumeName	= [switch]::new($false),
+		[Parameter(ParameterSetName = "Walk"			, Position = 0)] [switch]$Walk			= [switch]::new($false),
 
 		[Parameter(Mandatory = $true, ParameterSetName = "Abs"				, ValueFromPipelineByPropertyName  = $true, Position = 1)]
 		[Parameter(Mandatory = $true, ParameterSetName = "Base"				, ValueFromPipelineByPropertyName  = $true, Position = 1)]
@@ -115,7 +115,6 @@ function Get-GoFilePath {
 			"Split"
 #			"Walk"
 		) -contains $PSCmdLet.ParameterSetName
-		Write-Verbose "HasPath: $HasPath"
 
 		switch ($PSCmdLet.ParameterSetName) {
 			"Glob"	{ $Object.Pattern = $Pattern }
@@ -143,3 +142,4 @@ function Get-GoFilePath {
 		}
 	}
 }
+New-Alias -Name gof -Value Get-GoFilePath
