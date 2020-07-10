@@ -33,3 +33,10 @@ $ echo '{"api":"filepath.Walk", "path":"../z"}' | ./api
 {"Errno":0,"Result":"../z","Name":"z"}
 {"Errno":0,"Result":"../z/api","Name":"api"}
 ```
+
+### Testing
+
+In api_test.go, edit `kPath` & `kArgs` for a script or the `api` app, then:
+```
+$ go test
+```
