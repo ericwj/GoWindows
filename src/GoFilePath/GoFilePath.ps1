@@ -1,17 +1,9 @@
 <#
-#Requires -Module VSSetup
-using module VSSetup
-#>
-<#
 	.Synopsis
-	Obtain the latest installed version of Visual Studio.
-
-	.Parameter ExcludePrerelease
-	Do not allow selection of Preview versions of Visual Studio. (Passed through negated to Get-VSSetupInstance)
+	Run go APIs from the path/filepath package.
 #>
 function Get-GoFilePath {
 	[CmdLetBinding()]
-#	[OutputType([Microsoft.VisualStudio.Setup.Instance])]
 	Param(
 		[Parameter(ParameterSetName = "Abs"				, Position = 0)] [switch]$Abs			= [switch]::new($false),
 		[Parameter(ParameterSetName = "Base"			, Position = 0)] [switch]$Base			= [switch]::new($false),
