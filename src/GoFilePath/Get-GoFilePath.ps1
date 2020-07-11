@@ -64,8 +64,16 @@ function Get-GoFilePath {
 		[AllowNull()][AllowEmptyString()][string]$UseGoApiExecutable = ".\api.exe"
 	)
 	Begin {
+		$GoEnv = [System.Environment]::GetEnvironmentVariable("GOAPI")
 		if (![string]::IsNullOrEmpty($UseGoApiExecutable) -and (Test-Path $UseGoApiExecutable -PathType Leaf)) {
 			$Exe = $UseGoApiExecutable
+			Write-Verbose "Using '$Exe' from '-UseGoApiExecutable'."
+		} elseif (![string]::IsNullOrEmpty($script:PackedApiExe) -and (Test-Path $script:PackedApiExe -PathType Leaf)) {
+			$Exe = $script:PackedApiExe
+			Write-Verbose "Using '$Exe' from the module root."
+		} elseif (![string]::IsNullOrEmpty($GoEnv) -and (Test-Path $GoEnv -PathType Leaf)) {
+			$Exe = $GoEnv
+			Write-Verbose "Using '$Exe' from '`$env:GOAPI'."
 		} else {
 			$ExeName = "api.exe"
 			Write-Verbose "Looking for '$ExeName' on the path since '$ApiExe' is null, empty, or does not exist."
@@ -87,26 +95,29 @@ function Get-GoFilePath {
 			Api = "filepath." + $PSCmdLet.ParameterSetName
 		}
 		$HasPath = @(
-			"Separator"
-			"ListSeparator"
+#			"Separator"
+#			"ListSeparator"
 			"Abs"
 			"EvalSymlinks"
-#			"Glob"
-#			"Match"
-#			"Rel"
 			"Base"
 			"Clean"
 			"Dir"
 			"Ext"
 			"FromSlash"
+#			"Glob"
 			"IsAbs"
 #			"Join"
+#			"Match"
+#			"Rel"
+			"Split"
 			"SplitList"
 			"ToSlash"
 			"VolumeName"
-			"Split"
 #			"Walk"
 		) -contains $PSCmdLet.ParameterSetName
+		if ($HasPath) {
+			$Object.Path = $Path
+		}
 
 		switch ($PSCmdLet.ParameterSetName) {
 			"Glob"	{ $Object.Pattern = $Pattern }
@@ -134,4 +145,3 @@ function Get-GoFilePath {
 		}
 	}
 }
-New-Alias -Name gof -Value Get-GoFilePath
