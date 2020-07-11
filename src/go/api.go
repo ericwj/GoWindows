@@ -38,6 +38,8 @@ func main() {
       var aOut tOutput
 
       switch aIn.Api {
+      case "os.Getwd":               aOut.Result, err = os.Getwd()
+      case "os.Chdir":               err = os.Chdir(aIn.Path)
       case "filepath.Separator":     aOut.Result = string(filepath.Separator)
       case "filepath.ListSeparator": aOut.Result = string(filepath.ListSeparator)
       case "filepath.Abs":           aOut.Result, err = filepath.Abs(aIn.Path)
