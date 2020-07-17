@@ -19,9 +19,10 @@ type tInput struct {
 
 type tOutput struct {
    Error string `json:",omitempty"`
-   Errno int
+   Errno int    `json:",omitempty"`
    Result interface{}
    Name string `json:",omitempty"`
+   IsWalk bool `json:",omitempty"`
 }
 
 var sJsonOut = json.NewEncoder(os.Stdout)
@@ -61,7 +62,6 @@ func main() {
       case "filepath.Walk":
          err = filepath.Walk(aIn.Path, walkInfo)
          if err != nil { quit(err) }
-         continue
       default:
          quit(fmt.Errorf("Api not supported: %s\n", aIn.Api))
       }
@@ -74,7 +74,7 @@ func main() {
 }
 
 func walkInfo(iPath string, iFi os.FileInfo, iErr error) error {
-   aOut := tOutput{Result: iPath}
+   aOut := tOutput{Result: iPath, IsWalk:true}
    if iFi != nil {
       aOut.Name = iFi.Name()
    }
