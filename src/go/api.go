@@ -20,7 +20,7 @@ type tInput struct {
 type tOutput struct {
    Error string `json:",omitempty"`
    Errno int    `json:",omitempty"`
-   Result interface{}
+   Result interface{} `json:",omitempty"`
    Name string `json:",omitempty"`
    IsWalk bool `json:",omitempty"`
 }
