@@ -1,8 +1,8 @@
 <Project ToolsVersion="15.0">
-	<Target Name="BuildGo" BeforeTargets="CoreCompile"
+	<Target Name="BuildGo" BeforeTargets="CoreCompile" Condition=" '$(NoGo)' != 'true' "
 		Inputs="@(GoProject)"
 		Outputs="@(GoProject->$([System.IO.Path]::GetFullPath('$(OutDir)%(Filename).exe')))">
-		<Message Importance="normal" Text="GoProject: @(GoProject->'&quot;%(Identity)&quot;')" />
+		<Message Importance="normal" Text="GoProject: @(GoProject->'&quot;%(Filename)%(Extension)&quot;')" />
 		<Exec
 			Command="@where go"
 			ConsoleToMSBuild="true"
@@ -15,21 +15,26 @@
 				<Go>$(GoBinPath)</Go>
 				<Build>%(Filename)%(Extension)</Build>
 				<ExeName>%(Filename).exe</ExeName>
-				<Exe>%(RelativeDir)%(Filename).exe</Exe>
-				<Out>$([System.IO.Path]::GetFullPath('$(OutDir)%(Filename).exe'))</Out>
+				<Exe>$([System.IO.Path]::GetFullPath(%(RelativeDir)%(Filename).exe))</Exe>
+				<Out>$(OutDir)%(Filename).exe</Out>
+			</GoProject>
+		</ItemGroup>
+		<ItemGroup>
+			<GoProject>
+				<ProjectDir>$([System.IO.Path]::GetDirectoryName(%(Exe)))</ProjectDir>
 			</GoProject>
 		</ItemGroup>
 		<Exec
 			Command="@(GoProject->'%(Go) build %(Build)')"
 			LogStandardErrorAsError="true"
-			Outputs="@(GoProject->%(Exe))"
+			Outputs="@(GoProject->'%(Exe)')"
 			StandardErrorImportance="high"
 			StandardOutputImportance="high"
-			WorkingDirectory="@(GoProject->'%(RelativeDir)')"
+			WorkingDirectory="@(GoProject->'%(ProjectDir)')"
 			/>
 		<Copy SourceFiles="@(GoProject->'%(Exe)')" DestinationFolder="$(OutDir)" />
 		<ItemGroup>
-			<AllItemsFullPathWithTargetPath Include="@(GoProject->%(Exe))">
+			<AllItemsFullPathWithTargetPath Include="@(GoProject->'%(Exe)')">
 				<TargetPath>@(GoProject->'%(Out)')</TargetPath>
 				<!--<CopyToOutputDirectory>CopyAlways</CopyToOutputDirectory>-->
 				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

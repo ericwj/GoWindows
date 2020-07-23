@@ -1,0 +1,8 @@
+{
+	"profiles": {
+		"GoWindows.CSharp": {
+			"commandName": "Project",
+			"commandLineArgs": "{'Api':'filepath.EvalSymlinks','Path':'\\\\server\\share'}"
+		}
+	}
+}
