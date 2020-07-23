@@ -19,7 +19,7 @@ dotnet build .\src\cs\epi.csproj # also builds api.exe
 $env:Path += ";" + "$PWD\src\cs\bin\Debug\netcoreapp3.1"
 
 # Get setup (optional for many tests)
-Import-Module .\GoSetup.psm1
+Import-Module .src\ps\GoSetup.psm1
 Mount-Go -EnableCaseSensitiveDirectories -EnableLongPaths
 
 # Inner loop
