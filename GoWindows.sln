@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30223.230
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C594173B-4F8C-4ACD-9F62-DED6E1F44260}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoWindows.CSharp", "src\GoWindows.CSharp\GoWindows.CSharp.csproj", "{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3CC79B43-E675-40D6-B6E2-E9C6FCB19F08}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoWindows.Tests", "test\GoWindows.Tests\GoWindows.Tests.csproj", "{85391A21-A5FD-4392-871B-7ECAF89ADB39}"
@@ -19,12 +17,34 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		md-styles.css = md-styles.css
+		README.md = README.md
 		build\Version.props = build\Version.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "go", "go", "{EA28531C-CB9A-4EC4-B03B-2CD6519642BE}"
 	ProjectSection(SolutionItems) = preProject
 		src\go\api.go = src\go\api.go
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "go", "go", "{95C3E736-E134-4E0A-9E3E-A5468B8B8445}"
+	ProjectSection(SolutionItems) = preProject
+		test\go\GoBuild.psm1 = test\go\GoBuild.psm1
+		test\go\GoSetup.psm1 = test\go\GoSetup.psm1
+		test\go\GoTest.psm1 = test\go\GoTest.psm1
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "epi", "src\cs\epi.csproj", "{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ps", "ps", "{78EAABE1-93D4-4895-B6E8-15663DEB3D70}"
+	ProjectSection(SolutionItems) = preProject
+		src\ps\GoSetup.psm1 = src\ps\GoSetup.psm1
+		src\ps\GoTest.psm1 = src\ps\GoTest.psm1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{4263366B-EE15-4119-97C4-3249E2252FB6}"
+	ProjectSection(SolutionItems) = preProject
+		docs\install.md = docs\install.md
+		docs\overview.md = docs\overview.md
 	EndProjectSection
 EndProject
 Global
@@ -37,18 +57,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|x64.Build.0 = Debug|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Debug|x86.Build.0 = Debug|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|x64.ActiveCfg = Release|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|x64.Build.0 = Release|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|x86.ActiveCfg = Release|Any CPU
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5}.Release|x86.Build.0 = Release|Any CPU
 		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -61,14 +69,28 @@ Global
 		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Release|x64.Build.0 = Release|Any CPU
 		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Release|x86.ActiveCfg = Release|Any CPU
 		{85391A21-A5FD-4392-871B-7ECAF89ADB39}.Release|x86.Build.0 = Release|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Debug|x64.Build.0 = Debug|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Debug|x86.Build.0 = Debug|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Release|x64.ActiveCfg = Release|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Release|x64.Build.0 = Release|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Release|x86.ActiveCfg = Release|Any CPU
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8DE2B0AB-823F-47FB-99DB-9DE3786251D5} = {C594173B-4F8C-4ACD-9F62-DED6E1F44260}
 		{85391A21-A5FD-4392-871B-7ECAF89ADB39} = {3CC79B43-E675-40D6-B6E2-E9C6FCB19F08}
 		{EA28531C-CB9A-4EC4-B03B-2CD6519642BE} = {C594173B-4F8C-4ACD-9F62-DED6E1F44260}
+		{95C3E736-E134-4E0A-9E3E-A5468B8B8445} = {3CC79B43-E675-40D6-B6E2-E9C6FCB19F08}
+		{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A} = {C594173B-4F8C-4ACD-9F62-DED6E1F44260}
+		{78EAABE1-93D4-4895-B6E8-15663DEB3D70} = {C594173B-4F8C-4ACD-9F62-DED6E1F44260}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10BD17A8-FA2D-4291-A4EB-FEEC34215CA7}
