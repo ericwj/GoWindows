@@ -1,4 +1,4 @@
-﻿body
+body
 {
 	color: forestgreen;
 	background-color: black;
@@ -14,4 +14,25 @@ a:hover {
 }
 code {
 	color: orange;
+}
+blockquote p {
+	color: orangered;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: lime;
+}
+table, td {
+	border-collapse: collapse;
+	border-top: .1px solid darkgreen;
+	border-bottom: .1px solid darkgreen;
+}
+th {
+	border-collapse: collapse;
+	border-top: 2px solid darkgreen;
+	border-bottom: 2px solid darkgreen;
 }
