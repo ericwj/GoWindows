@@ -128,7 +128,7 @@ Hence in this case it is easier to ship it separately and put it on the path sep
 
 |Publish Profile Name|Size|Description|
 |:--|--:|:--|
-|Portable|Yes|1.5MB|Can be run with .NET Core Runtime 3.1 latest installed on the machine or present in a local directory as binaries only.
+|Portable|1.5MB|Can be run with .NET Core Runtime 3.1 latest installed on the machine or present in a local directory as binaries only.
 |SelfContained|60MB|Can be `xcopy` deployed and ran in-place.
 |SingleFile|61MB|Copy be ` xcopy` deployed and will basically unzip and run like the *Self-contained* profile.
 
