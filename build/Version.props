@@ -3,7 +3,7 @@
 		<VersionSuffixDate>$([System.DateTime]::Now.ToString(`yyyyMMdd`))</VersionSuffixDate>
 		<VersionSuffixTime>$([System.Int32]::Parse($([System.DateTime]::Now.ToString(`HHmm`))))</VersionSuffixTime>
 		<VersionPrefix Condition=" '$(VersionPrefix)' == '' ">1.0.0</VersionPrefix>
-		<VersionSuffix Condition=" '$(VersionSuffix)' == '' ">dev-$(VersionSuffixDate).$(VersionSuffixTime)</VersionSuffix>
+		<VersionSuffix Condition=" '$(VersionSuffix)' == '' ">dev-$(VersionSuffixDate)-$(VersionSuffixTime)</VersionSuffix>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(SolutionDir)' == '' ">
 		<SolutionDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</SolutionDir>
