@@ -164,4 +164,8 @@ to get rid of the `Peculiar` directory and *any and all* .vhdx files, mounted or
 
 The most common error is complaints about end of file reading expected or actual test results
 from `api.exe` or `epi.exe`.
-This is an indication that the .csv file does not match the expected test results.
+This is an indication that the .csv file does not match the expected test results,
+or that either `api.exe` or `epi.exe` exited prematurely.
+
+Both executables absolutely require valid JSON and valid values for the `Api` parameter.
+Neither will prematurely exit over invalid arguments provided to a valid API.
