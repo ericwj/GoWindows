@@ -7,7 +7,6 @@ This repository contains infrastructure to test parts of [go](https://github.com
 * [Overview](docs/overview.md)
 * [How to install](docs/install.md)
 * [Authoring Tests](docs/authoring.md)
-* [Deploying](docs/publish.md)
 
 ## How To Use
 
