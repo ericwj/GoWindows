@@ -75,14 +75,14 @@ PS> dir
 
     Directory: C:\go
 
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a---           7/23/2020  6:25 AM         217812 file.actual.json
--a---           7/23/2020  6:13 AM         301867 file.csv
--a---           7/23/2020  6:25 AM         235024 file.expected.json
--a---           7/23/2020  6:25 AM        1489855 file.failures.html
--a---           7/23/2020  6:25 AM        2926803 file.failures.json
--a---           7/23/2020  6:25 AM         530541 file.json
--a---           7/23/2020  6:25 AM        1718750 file.results.html
--a---           7/23/2020  6:25 AM        3390959 file.results.json
+Mode    Length Name
+----    ------ ----
+-a---   217812 file.actual.json
+-a---   301867 file.csv
+-a---   235024 file.expected.json
+-a---  1489855 file.failures.html
+-a---  2926803 file.failures.json
+-a---   530541 file.json
+-a---  1718750 file.results.html
+-a---  3390959 file.results.json
 ```
