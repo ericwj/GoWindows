@@ -18,12 +18,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.targets = Directory.Build.targets
 		md-styles.css = md-styles.css
 		README.md = README.md
-		build\Version.props = build\Version.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "go", "go", "{EA28531C-CB9A-4EC4-B03B-2CD6519642BE}"
 	ProjectSection(SolutionItems) = preProject
 		src\go\api.go = src\go\api.go
+		src\go\api.goproj = src\go\api.goproj
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "epi", "src\cs\epi.csproj", "{1A5E22BE-4698-4E6F-AEAF-F3E5A79F199A}"
@@ -39,6 +39,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{4263366B-E
 		docs\authoring.md = docs\authoring.md
 		docs\install.md = docs\install.md
 		docs\overview.md = docs\overview.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{CF8E8A01-4E72-444B-9672-F60A109C90C7}"
+	ProjectSection(SolutionItems) = preProject
+		build\go.props = build\go.props
+		build\go.targets = build\go.targets
+		build\Version.props = build\Version.props
 	EndProjectSection
 EndProject
 Global

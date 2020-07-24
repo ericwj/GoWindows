@@ -1,45 +1,13 @@
 <Project ToolsVersion="15.0">
-	<Target Name="BuildGo" BeforeTargets="CoreCompile" Condition=" '$(NoGo)' != 'true' "
-		Inputs="@(GoProject)"
-		Outputs="@(GoProject->$([System.IO.Path]::GetFullPath('$(OutDir)%(Filename).exe')))">
-		<Message Importance="normal" Text="GoProject: @(GoProject->'&quot;%(Filename)%(Extension)&quot;')" />
-		<Exec
-			Command="@where go"
-			ConsoleToMSBuild="true"
-			StandardOutputImportance="low">
-			<Output TaskParameter="ConsoleOutput" PropertyName="GoBinPath" />
-		</Exec>
-		<Error Condition="!Exists('$(GoBinPath)')" Code="2" File="@(GoProject)" Text="'go' was not found on the path."/>
-		<ItemGroup>
-			<GoProject>
-				<Go>$(GoBinPath)</Go>
-				<Build>%(Filename)%(Extension)</Build>
-				<ExeName>%(Filename).exe</ExeName>
-				<Exe>$([System.IO.Path]::GetFullPath(%(RelativeDir)%(Filename).exe))</Exe>
-				<Out>$(OutDir)%(Filename).exe</Out>
-			</GoProject>
-		</ItemGroup>
-		<ItemGroup>
-			<GoProject>
-				<ProjectDir>$([System.IO.Path]::GetDirectoryName(%(Exe)))</ProjectDir>
-			</GoProject>
-		</ItemGroup>
-		<Exec
-			Command="@(GoProject->'%(Go) build %(Build)')"
-			LogStandardErrorAsError="true"
-			Outputs="@(GoProject->'%(Exe)')"
-			StandardErrorImportance="high"
-			StandardOutputImportance="high"
-			WorkingDirectory="@(GoProject->'%(ProjectDir)')"
-			/>
-		<Copy SourceFiles="@(GoProject->'%(Exe)')" DestinationFolder="$(OutDir)" />
-		<ItemGroup>
-			<AllItemsFullPathWithTargetPath Include="@(GoProject->'%(Exe)')">
-				<TargetPath>@(GoProject->'%(Out)')</TargetPath>
-				<!--<CopyToOutputDirectory>CopyAlways</CopyToOutputDirectory>-->
-				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			</AllItemsFullPathWithTargetPath>
-		</ItemGroup>
-		<Message Importance="high" Text="@(GoProject->'%(Build) -> %(Out)')" />
+	<Import
+		Project="$(MSBuildThisFileDirectory)\build\go.targets"
+		Condition="Exists('$(MSBuildThisFileDirectory)\build\go.targets') and '$(MSBuildProjectExtension)' == '.goproj'"/>
+
+	<Target Name="BuildGo" BeforeTargets="BeforeBuild" Condition=" '$(NoGo)' != 'true' ">
+		<MSBuild Projects="@(GoProject)" Targets="">
+			<Output
+				TaskParameter="TargetOutputs"
+				ItemName="AssembliesBuiltByChildProjects"/>
+		</MSBuild>
 	</Target>
 </Project>

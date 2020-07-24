@@ -1,0 +1,38 @@
+<Project>
+	<PropertyGroup>
+		<DefaultLanguageSourceExtension>.go</DefaultLanguageSourceExtension>
+		<Language>Go</Language>
+		<OutputType>Exe</OutputType>
+		<OutputPath>$(MSBuildProjectDirectory)</OutputPath>
+		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+		<PrimaryFile>$(AssemblyName)$(DefaultLanguageSourceExtension)</PrimaryFile>
+		<CoreCompileDependsOn>$(CoreCompileDependsOn);FindGo</CoreCompileDependsOn>
+		<OutDir Condition=" '$(OutDir)' == '' ">$(MSBuildProjectDirectory)</OutDir>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<CreateManifestResourceNamesDependsOn/>
+		<EnableDefaultNoneItems>False</EnableDefaultNoneItems>
+		<EnableDefaultItems>False</EnableDefaultItems>
+		<IncludeBuildOutput>True</IncludeBuildOutput>
+		<BuildOutputTargetFolder>build</BuildOutputTargetFolder>
+		<PackageType>Dependency</PackageType>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="**/*$(DefaultLanguageSourceExtension)" />
+		<Compile Remove="$(DefaultItemExcludes)" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0"/>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectBuildOutput Include="$(OutputPath)**\*.exe" />
+		<None Include="@(ProjectBuildOutput)">
+			<Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Visible>false</Visible>
+			<Pack>True</Pack>
+			<PackagePath>build\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>

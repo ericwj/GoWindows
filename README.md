@@ -7,13 +7,14 @@ This repository contains infrastructure to test parts of [go](https://github.com
 * [Overview](docs/overview.md)
 * [How to install](docs/install.md)
 * [Authoring Tests](docs/authoring.md)
+* [Deploying](docs/publish.md)
 
 ## How To Use
 
 The workflow while making changes to `epi.exe` may look like this,
 assuming the working directory is the root of this repository:
 
-> This **does not** work on the PowerShell that comes pre-installed on Windows. 
+> This **does not** work on the PowerShell that comes pre-installed on Windows.
 > Install [PowerShell 7](https://aka.ms/powershell).
 
 ```PowerShell
@@ -88,37 +89,6 @@ The following general remarks are useful:
   without actually deleting any.
 
 ## Running on a build server
-
-When it is time to test on a build server, the JSON files produced by `Test-Go`
-on a developer machine can be shipped to the build server,
-along with `api.exe` (required) a published version of `epi.exe` (optional)
-and the PowerShell modules in `.\src\ps`.
-
-The *expected* test results reflect the configuration of the developer machine
-through the current working directory, any ad-hoc arguments given to `Test-Go`
-and the values of environment variables.
-
-> Make sure the developer machine uses `Mount-Go` and is running `epi.exe` 
-> in the same directory as the build server does to run `api.exe`.
-
-
-The self-contained deployment creates a directory containing everything `epi.exe`
-requires and also includes `api.exe`:
-```
-dotnet publish .\src\cs /p:PublishProfile=SelfContained
-```
-A convenience could be to create a single file instead,
-however now `api.exe` must be shipped separately:
-```
-dotnet publish .\src\cs /p:PublishProfile=SingleFile
-```
-These publish methods have been configured for `win-x86`.
-To build a 64-bit version, change `win-x86` to `win-x64` in
-`.\src\cs\Properties\PublishProfiles\*.pubxml`.
-
-In both cases the published output is in
-`.\src\cs\bin\Release\netcoreapp3.1\publish`
-which can be `xcopy`-deployed to any other machine.
 
 On the build server the process will look mostly like so,
 assuming the appropriate CSV files are in the current working directory,

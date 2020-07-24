@@ -12,8 +12,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<GoProject Include="..\go\api.go" />
+		<GoProject Include="..\go\api.goproj" />
 	</ItemGroup>
-
-	<ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+	<ItemGroup>
+		<None Include="..\go\api.exe">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Visible>false</Visible>
+			<Pack>True</Pack>
+			<PackagePath>build\</PackagePath>
+		</None>
+	</ItemGroup>
 </Project>

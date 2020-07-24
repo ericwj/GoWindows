@@ -1,0 +1,45 @@
+<Project>
+	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
+	<Target Name="Clean">
+		<Delete Files="$(OutputAssembly)" />
+	</Target>
+	<Target Name="Pack"/>
+	<Target Name="Publish" />
+	<Target Name="BeforeBuild"/>
+	<Target Name="CreateManifestResourceNames"/>
+	<Target Name="PrepareForBuild" AfterTargets="BeforeBuild">
+		<Exec
+			Command="@where go"
+			ConsoleToMSBuild="true"
+			StandardOutputImportance="low">
+			<Output TaskParameter="ConsoleOutput" PropertyName="Go" />
+		</Exec>
+		<PropertyGroup>
+			<OutputAssembly Condition=" '$(OutputAssembly)' == '' ">$([System.IO.Path]::GetFullPath('$(OutputPath)$(AssemblyName).exe'))</OutputAssembly>
+		</PropertyGroup>
+		<Message Importance="normal" Text="PrimaryFile: $(PrimaryFile), AssemblyName: $(AssemblyName), OutDir: $(OutDir), Go: $(Go)" />
+		<Error Condition="!Exists('$(Go)')" Code="2" File="$(PrimaryFile)" Text="'go' was not found on the path."/>
+	</Target>
+	<Target Name="Build" DependsOnTargets="BeforeBuild;PrepareForBuild"
+			Inputs="@(Compile)"
+			Outputs="$(OutputAssembly)"
+			Returns="$(BuiltOutputProjectGroup)">
+		<MakeDir Directories="$(OutputPath)" Condition="!Exists('$(OutputPath)')" />
+		<Message Importance="normal" Text="Compile: @(Compile->'&quot;%(Filename)%(Extension)&quot;')" />
+		<Exec
+			Command="$(Go) build $(PrimaryFile)"
+			LogStandardErrorAsError="true"
+			Outputs="$(OutputAssembly)"
+			StandardErrorImportance="high"
+			StandardOutputImportance="high"
+			WorkingDirectory="$(MSBuildProjectDirectory)"
+			/>
+		<ItemGroup>
+			<AllItemsFullPathWithTargetPath Include="$(OutputAssembly)">
+				<TargetPath>$(OutputPath)</TargetPath>
+				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			</AllItemsFullPathWithTargetPath>
+		</ItemGroup>
+		<Message Importance="high" Text="$(PrimaryFile) -> $(OutputAssembly)" />
+	</Target>
+</Project>

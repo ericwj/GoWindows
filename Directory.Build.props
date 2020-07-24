@@ -1,5 +1,8 @@
-﻿<Project ToolsVersion="15.0">
+<Project ToolsVersion="15.0">
 	<Import
 		Project="$(MSBuildThisFileDirectory)\build\Version.props"
 		Condition="Exists('$(MSBuildThisFileDirectory)\build\Version.props')"/>
+	<Import
+		Project="$(MSBuildThisFileDirectory)\build\go.props"
+		Condition="Exists('$(MSBuildThisFileDirectory)\build\go.props') and '$(MSBuildProjectExtension)' == '.goproj'"/>
 </Project>
