@@ -759,8 +759,8 @@ function ConvertTo-Go {
 							} else {
 								throw [System.ArgumentException]::new("'$v' requires a value for '$name'. " +
 									"Add the 'GoTest$name' environment variable or the '$name' argument like so: -$name value or " +
-									"`$splat = @{$name=value,othername=othervalue}; ConvertTo-Go @splat (...) " +
-									"InputObject: $InputObject")
+									"`$splat = @{$name=value,othername=othervalue}; CmdLet @splat (...) " +
+									"InputObject: $InputObject, Parameters: @{$($Parameters.Keys | foreach { "$_=$($Parameters[$_])"})}")
 							}
 						}
 					} else {
@@ -1419,13 +1419,13 @@ function Splat {
 				}
 				$index++
 
-				if ($var -match "^-(?<n>.*):(?<v>.+)$") {
+				if ($var -match "^-(?<n>[^:]+):(?<v>.+)$") {
 					$n = $Matches["n"]
 					$v = $Matches["v"]
 					Write-Debug "-$($n):$v"
 					$hashtable.Add($n, $v)
 					$SwitchName = $null
-				} elseif ($var -match "^-(?<n>.*)[:]?$") {
+				} elseif ($var -match "^-(?<n>[^:]+)[:]?$") {
 					$n = $Matches["n"]
 					Write-Debug "-$($n):`$true"
 					$hashtable.Add($n, $true)
