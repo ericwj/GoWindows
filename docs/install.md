@@ -111,7 +111,7 @@ To build just `epi.exe` in a standard portable debug configuration, run
 dotnet build .\src\cs
 ```
 
-This also builds `api.exe` and includes it in the project output.
+This also builds `api.exe` and includes it in the project output at `.\src\cs\bin\Debug\netcoreapp3.1\`.
 
 To publish `epi.exe`, one of three deployment methods can be used like so:
 
