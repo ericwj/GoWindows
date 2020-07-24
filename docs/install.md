@@ -29,7 +29,7 @@ The testing infrastructure has some dependencies, here's what they are and how t
   ```PowerShell
   PS> Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-Management-PowerShell, Microsoft-Hyper-V-Services, Microsoft-Hyper-V
   ```
-  If that works with another Hyper-V installed, run the following to see if that produces a `.vhdx` file or an error.
+  If that works with another hypervisor installed, run the following to see if that produces a `.vhdx` file or an error.
   ```PowerShell
   New-Vhd Test.vhdx -Size 3MB -Fixed
   Mount-Vhd Test.vhdx
@@ -120,7 +120,11 @@ dotnet publish .\src\cs /p:PublishProfile=Portable
 dotnet publish .\src\cs /p:PublishProfile=SelfContained
 dotnet publish .\src\cs /p:PublishProfile=SingleFile
 ```
-Each of these create a folder in `.\publish` with the result of the publish build. `api.exe` is each time include, but with the *SingleFile* publish method, the executable is only on disk *after* `epi.exe` has started and its location is a temporary directory in `$env:Temp\.net`. Hence in this case it is easier to ship it separately and put it on the path separately.
+Each of these create a folder in `.\publish` with the result of the publish build.
+`api.exe` is each time included, but with the *SingleFile* publish method,
+the executable is only on disk *after* `epi.exe` has started and its location
+is a temporary directory in `$env:Temp\.net`.
+Hence in this case it is easier to ship it separately and put it on the path separately.
 
 |Publish Profile Name|Size|Description|
 |:--|--:|:--|
