@@ -10,9 +10,11 @@ This repository contains infrastructure to test parts of [go](https://github.com
 
 ## How To Use
 
-The workflow while making changes to `epi.exe` may look like this, assuming the working directory is the root of this repository:
+The workflow while making changes to `epi.exe` may look like this,
+assuming the working directory is the root of this repository:
 
-> This **does not** work on the PowerShell that comes pre-installed on Windows. Install [PowerShell 7](aka.ms/powershell).
+> This **does not** work on the PowerShell that comes pre-installed on Windows. 
+> Install [PowerShell 7](https://aka.ms/powershell).
 
 ```PowerShell
 dotnet build .\src\cs\epi.csproj # also builds api.exe
@@ -20,7 +22,7 @@ dotnet build .\src\cs\epi.csproj # also builds api.exe
 $env:Path += ";" + "$PWD\src\cs\bin\Debug\netcoreapp3.1"
 
 # Get setup (optional for many tests)
-Import-Module .src\ps\GoSetup.psm1
+Import-Module .\src\ps\GoSetup.psm1
 Mount-Go -EnableCaseSensitiveDirectories -EnableLongPaths
 
 # Inner loop
@@ -42,7 +44,10 @@ This workflow changes as follows when developing `api.go`:
 Test-Go .\pathmath.csv
 ```
 
-The working directory should be the directory where `Mount-Go` will be running. The test definition files (`.csv`) and expected test result files (`.json`) can be anywhere - only the `.csv` file is specified on the command line, the JSON file is expected to be in the same directory and have the same name.
+The working directory should be the directory where `Mount-Go` will be running.
+The test definition files (`.csv`) and expected test result files (`.json`) can be anywhere.
+Only the `.csv` file is specified on the command line, the JSON file is expected to be in
+the same directory and have the same name.
 
 ## Quickly Iterating
 
@@ -84,28 +89,43 @@ The following general remarks are useful:
 
 ## Running on a build server
 
-When it is time to test on a build server, the JSON files produced by `Test-Go` on a developer machine can be shipped to the build server, along with `api.exe` (required) a published version of `epi.exe` (optional) and the PowerShell modules in `.\src\ps`.
+When it is time to test on a build server, the JSON files produced by `Test-Go`
+on a developer machine can be shipped to the build server,
+along with `api.exe` (required) a published version of `epi.exe` (optional)
+and the PowerShell modules in `.\src\ps`.
 
-> Make sure the developer machine uses `Mount-Go` and is running `epi.exe` in the same directory as the build server does to run `api.exe`, since the *expected* test results reflect the configuration of the developer machine through the current working directory.
+The *expected* test results reflect the configuration of the developer machine
+through the current working directory, any ad-hoc arguments given to `Test-Go`
+and the values of environment variables.
 
-The self-contained deployment creates a directory containing everything `epi.exe` requires and also includes `api.exe`:
+> Make sure the developer machine uses `Mount-Go` and is running `epi.exe` 
+> in the same directory as the build server does to run `api.exe`.
+
+
+The self-contained deployment creates a directory containing everything `epi.exe`
+requires and also includes `api.exe`:
 ```
 dotnet publish .\src\cs /p:PublishProfile=SelfContained
 ```
-A convenience could be to create a single file instead, however now `api.exe` must be shipped separately:
+A convenience could be to create a single file instead,
+however now `api.exe` must be shipped separately:
 ```
 dotnet publish .\src\cs /p:PublishProfile=SingleFile
 ```
-These publish methods have been configured for `win-x86`. To build a 64-bit version, change `win-x86` to `win-x64` in `.\src\cs\Properties\PublshProfiles\*.pubxml`.
+These publish methods have been configured for `win-x86`.
+To build a 64-bit version, change `win-x86` to `win-x64` in
+`.\src\cs\Properties\PublishProfiles\*.pubxml`.
 
-In both cases the published output is in `.\src\cs\bin\Release\netcoreapp3.1\publish` which can be `xcopy`-deployed to any other machine.
+In both cases the published output is in
+`.\src\cs\bin\Release\netcoreapp3.1\publish`
+which can be `xcopy`-deployed to any other machine.
 
-On the build server the process will look mostly like so, assuming the appropriate CSV files are in the current working directory, as well as the expected JSON files or that `epi.exe` is on the path:
+On the build server the process will look mostly like so,
+assuming the appropriate CSV files are in the current working directory,
+as well as the expected JSON files or that `epi.exe` is on the path:
 
 ```PowerShell
-# add the path to wherever this folder was copied to:
 $env:Path += ";" + "<path to epi.exe>"
-# add the path to api.exe if it wasn't included in the publish folder
 $env:Path += ";" + "<path to api.exe>"
 
 # Import modules
@@ -134,6 +154,14 @@ if errorlevel 1 goto :FailTheBuild
 ```
 > test.cmd (Elevated)
 
+`Dismount-Go` is not required if the build machine will be torn down after the test run.
+
+If the terminal session closes in which `Mount-Go` has ran, the values of environment variables
+are lost and `Dismount-Go` will need to be run in the appropriate directory with the `-Force` argument
+to get rid of the `Peculiar` directory and *any and all* .vhdx files, mounted or not, in that directory.
+
 ## Common Errors
 
-The most common error is complaints about end of file reading expected or actual test results from `api.exe` or `epi.exe`. This is an indication that the .csv file does not match the expected test results.
+The most common error is complaints about end of file reading expected or actual test results
+from `api.exe` or `epi.exe`.
+This is an indication that the .csv file does not match the expected test results.
