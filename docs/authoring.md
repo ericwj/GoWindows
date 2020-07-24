@@ -219,7 +219,7 @@ The following prefixes are defined by `Mount-Go` easily extracted from the above
 |`Remote`			|The remote path for SMB shares.
 |`Shared`			|The local folder that is shared by an SMB share.
 |`VhdLink`			|The link or access path as a normal path, if present.
-|`VhdRoot`			|The root of the drive as reported by `($vhd | Get-Partition).AccessPaths[0]` after setting up the partition.
-|`VolId`			|The value of `($vhd | Get-Partition).Guid` for the virtual disk.
+|`VhdRoot`			|The root of the drive as reported by `AccessPaths[0]` after setting up the partition.
+|`VolId`			|The partition GUID for the *Basic Data* partition on the virtual disk.
 
 See `Get-Help Build-GoEvalSymlinksTests` for more information.
