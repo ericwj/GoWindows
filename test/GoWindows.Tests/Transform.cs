@@ -64,10 +64,10 @@ namespace GoWindows.Tests
 		[InlineData(@"/\?\volumE{00000000-0000-0000-0000-000000000000}/..", @"\\?\volumE{00000000-0000-0000-0000-000000000000}\..")]
 		public void Abs(string path, string expected) => UnaryFilePath(Api.Abs, path, expected);
 		[Theory]
-		[InlineData(@"\\server\share", @".")]
+		[InlineData(@"\\server\share", null)]
 		[InlineData(@"\\?\server\share", @"share")]
-		[InlineData(@"\\?\unc\server\share", @".")]
-		[InlineData(@"\\?\UNC\server\share", @".")]
+		[InlineData(@"\\?\unc\server\share", null)]
+		[InlineData(@"\\?\UNC\server\share", null)]
 		public void Base(string path, string expected) => UnaryFilePath(Api.Base, path, expected);
 		[Theory]
 		[InlineData("c:", "c:")]

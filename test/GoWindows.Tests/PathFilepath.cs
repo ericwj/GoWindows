@@ -92,26 +92,26 @@ namespace GoWindows.Tests
 		}
 
 		[Theory]
-		[InlineData(null, ".")]
-		[InlineData("", ".")]
-		[InlineData(@"C:\", ".")]
+		[InlineData(null, null)]
+		[InlineData("", null)]
+		[InlineData(@"C:\", null)]
 		[InlineData(@"C:\A", "A")]
-		[InlineData(@"\\?\..", @".")]
+		[InlineData(@"\\?\..", null)]
 		public void BaseSucceeds(string path, string expected) {
 			var actual = filepath.Base(path);
 			Assert.Equal(expected, actual);
 		}
 		[Theory]
-		[InlineData(null, ".")]
-		[InlineData("", ".")]
+		[InlineData(null, null)]
+		[InlineData("", null)]
 		[InlineData(@"C:\", @"C:\")]
 		public void CleanSucceeds(string path, string expected) {
 			var actual = filepath.Clean(path);
 			Assert.Equal(expected, actual);
 		}
 		[Theory]
-		[InlineData(null, ".")]
-		[InlineData("", ".")]
+		[InlineData(null, null)]
+		[InlineData("", null)]
 		[InlineData(@"C:\", @"C:\")]
 		[InlineData(@"C:\A", @"C:\")]
 		public void DirSucceeds(string path, string expected) {
@@ -119,8 +119,8 @@ namespace GoWindows.Tests
 			Assert.Equal(expected, actual);
 		}
 		[Theory]
-		[InlineData(null, ".")]
-		[InlineData("", ".")]
+		[InlineData(null, null)]
+		[InlineData("", null)]
 		[InlineData(@"C:\\Doesn't Exist", null, 3, "The system cannot find the path specified. (0x80070003)")]
 		[InlineData(@"C:\", @"C:\")]
 		public void EvalSymLinksSucceeds(string path, string expected, int? code = null, string message = null) {
@@ -141,7 +141,7 @@ namespace GoWindows.Tests
 		}
 		[Theory]
 		[InlineData(null, null)]
-		[InlineData("", "")]
+		[InlineData("", null)]
 		[InlineData(@"C:/", @"C:\")]
 		public void FromSlashSucceeds(string path, string expected) {
 			var actual = filepath.FromSlash(path);
@@ -150,6 +150,7 @@ namespace GoWindows.Tests
 		[Theory]
 		[InlineData(null, true)]
 		[InlineData("", true)]
+		[InlineData(@"*", false, ".", "file.txt")]
 		[InlineData(@"*.*", false, ".", "file.txt")]
 		[InlineData(@"f*.*", false, "file.txt")]
 		[InlineData(@"F*.*", false)]
@@ -183,9 +184,9 @@ namespace GoWindows.Tests
 			Assert.Equal(expected, actual);
 		}
 		[Theory]
-		[InlineData(".")]
-		[InlineData(".", null)]
-		[InlineData(".", "")]
+		[InlineData(null)]
+		[InlineData(null, null)]
+		[InlineData(null, "")]
 		[InlineData(@"C:\", @"C:\")]
 		public void JoinSucceeds(string expected, params string[] paths) {
 			var actual = filepath.Join(paths);
@@ -203,8 +204,8 @@ namespace GoWindows.Tests
 			Assert.Equal(expected, actual);
 		}
 		[Theory]
-		[InlineData(null, null, ".")]
-		[InlineData("", "", ".")]
+		[InlineData(null, null, null)]
+		[InlineData("", "", null)]
 		[InlineData(@"C:\", @"C:\", @".")]
 		public void RelSucceeds(string basepath, string targpath, string expected) {
 			var (actual, err) = filepath.Rel(basepath, targpath);
@@ -233,7 +234,7 @@ namespace GoWindows.Tests
 		}
 		[Theory]
 		[InlineData(null, null)]
-		[InlineData("", "")]
+		[InlineData("", null)]
 		[InlineData(@"C:\", @"C:/")]
 		public void ToSlashSucceeds(string path, string expected) {
 			var actual = filepath.ToSlash(path);

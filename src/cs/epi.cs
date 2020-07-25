@@ -255,7 +255,7 @@ namespace GoWindows.CSharp
 			=> @this.IndexOf(Path.AltDirectorySeparatorChar) < 0
 			? @this
 			: @this.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
-		private static bool IsDirectorySeparator(this char @this)
+		public static bool IsDirectorySeparator(this char @this)
 			=> @this == Path.DirectorySeparatorChar || @this == Path.AltDirectorySeparatorChar;
 		public static bool IsNoParsePrefix(this string @this)
 			=> @this.AsSpan().IsNoParsePrefix();

@@ -4,16 +4,12 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
 using GoWindows.CSharp;
-
-using Microsoft.Extensions.FileSystemGlobbing;
 
 using Vanara.PInvoke;
 
@@ -28,6 +24,12 @@ public partial class go {
 				public static readonly char Separator = Path.DirectorySeparatorChar;
 				public static readonly char AltSeparator = Path.AltDirectorySeparatorChar;
 				public static readonly char ListSeparator = Path.PathSeparator;
+				public const string EmptyPath = null;
+				public const string EmptyDir = null;
+				public const string EmptyFile = null;
+				public const string EmptyExt = null;
+				public const string EmptyWin32Pattern = "*";
+				public const string RelCurrentDir = ".";
 				public static ReadOnlySpan<char> Separators => new [] {
 					Path.DirectorySeparatorChar,
 					Path.AltDirectorySeparatorChar
@@ -50,13 +52,13 @@ public partial class go {
 				}
 				/// <summary>func Base(path string) string</summary>
 				public string Base(string path) {
-					if (string.IsNullOrEmpty(path)) return ".";
+					if (string.IsNullOrEmpty(path)) return EmptyFile;
 					var without = path.NormalizePrefix(out var prefix);
 					var result = without.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
 					if (string.IsNullOrEmpty(without) && prefix.Length == 0)
 						return Path.DirectorySeparatorChar.ToString();
 					result = Path.GetFileName(prefix + without);
-					if (string.IsNullOrEmpty(result)) return ".";
+					if (string.IsNullOrEmpty(result)) return EmptyFile;
 					return result;
 				}
 				private static readonly string two = "" + Separator + Separator;
@@ -77,7 +79,7 @@ public partial class go {
 				private static readonly Regex parentPlusDots = new Regex(@$"(^|{esc})[^{esc}]+{esc}\.\.({esc}|$)");
 				/// <summary>func Clean(path string) string</summary>
 				public string Clean(string path) {
-					if (string.IsNullOrEmpty(path)) return ".";
+					if (string.IsNullOrEmpty(path)) return EmptyPath;
 					var without = path.NormalizePrefix(out var prefix);
 					if (string.IsNullOrEmpty(without)) return prefix;
 					if (prefix.Length > 0) {
@@ -125,13 +127,13 @@ public partial class go {
 					} while (previous != current);
 
 					if (current == "")
-						return ".";
+						return EmptyPath;
 					else
 						return current.SuppressEmpty();
 				}
 				/// <summary>func Dir(path string) string</summary>
 				public string Dir(string path) {
-					if (string.IsNullOrEmpty(path)) return ".";
+					if (string.IsNullOrEmpty(path)) return EmptyDir;
 					var without = path.NormalizePrefix(out var prefix);
 					var normalized = prefix + without;
 					var root = Path.GetPathRoot(normalized);
@@ -139,12 +141,12 @@ public partial class go {
 					var result = string.IsNullOrEmpty(dir) ? root : dir;
 					if (result.StartsWith(prefix))
 						result = path.Substring(0, prefix.Length) + result.Substring(prefix.Length);
-					return string.IsNullOrEmpty(result) ? "." : result;
+					return string.IsNullOrEmpty(result) ? EmptyDir : result;
 				}
 
 				/// <summary>func EvalSymlinks(path string) (string, error)</summary>
 				public (string result, error err) EvalSymlinks(string path) {
-					if (string.IsNullOrEmpty(path)) return (".", default(error));
+					if (string.IsNullOrEmpty(path)) return (EmptyPath, default(error));
 					var without = path.ToDefaultSeparator().NormalizePrefix(out var prefix);
 					var normalized = prefix + without;
 					try {
@@ -194,14 +196,15 @@ public partial class go {
 				}
 				/// <summary>func Ext(path string) string</summary>
 				public string Ext(string path) {
-					if (string.IsNullOrEmpty(path)) return null;
+					if (string.IsNullOrEmpty(path)) return EmptyExt;
 					var ext = Path.GetExtension(path.NormalizePrefix());
-					return ext.SuppressEmpty();
+					if (string.IsNullOrEmpty(ext)) return EmptyExt;
+					return ext;
 				}
 				/// <summary>func FromSlash(path string) string</summary>
 				public string FromSlash(string path) {
 					if (path is null || path.Length == 0)
-						return path;
+						return EmptyPath;
 					if (path.IndexOf('/') >= 0)
 						path = path.Replace('/', Separator);
 					return path;
@@ -251,7 +254,7 @@ public partial class go {
 					return query.OrderBy(x => x, StringComparer.Ordinal).ToArray();
 				}
 				public static (Regex regex, string pattern) GlobPatternToWin32(string pattern) {
-					if (string.IsNullOrEmpty(pattern)) return (GlobDotRex, ".");
+					if (string.IsNullOrEmpty(pattern)) return (GlobDotRex, EmptyWin32Pattern);
 					var status = TryGlobPatternToWin32(pattern, out var result, out var match, out var group, out var offender, out var index);
 					string explanation;
 					switch (status) {
@@ -323,7 +326,7 @@ public partial class go {
 						return false;
 					}
 					if (string.IsNullOrEmpty(pattern)) {
-						result = (GlobDotRex.ToString(), ".");
+						result = (GlobDotRex.ToString(), EmptyWin32Pattern);
 						match = default;
 						group = default;
 						offender = default;
@@ -567,14 +570,14 @@ public partial class go {
 				/// <summary>func Rel(basepath, targpath string) (string, error)</summary>
 				public (string result, error error) Rel(string basepath, string targpath)
 					=> string.IsNullOrEmpty(targpath)
-					? (".", default(error))
+					? (EmptyPath, default(error))
 					: Try<(string basepath, string targpath), string>((basepath, targpath), x => Path.GetRelativePath(
 						relativeTo: x.basepath.NormalizePrefix(),
 						path: x.targpath.NormalizePrefix()));
 				/// <summary>func Split(path string) (dir, file string)</summary>
 				public (string dir, string file) Split(string path) {
 					if (string.IsNullOrEmpty(path)) return (null, null);
-					if (path.EndsWith(Separator)) return (path, string.Empty);
+					if (path.Last().IsDirectorySeparator()) return (path, string.Empty);
 					var n = path.NormalizePrefix(out var prefix);
 					var f = Path.GetFileName(n);
 					var d = Path.GetDirectoryName(n);
@@ -591,7 +594,7 @@ public partial class go {
 				/// <summary>func ToSlash(path string) string</summary>
 				public string ToSlash(string path) {
 					if (path is null || path.Length == 0)
-						return path;
+						return EmptyPath;
 					if (path.IndexOf(Path.DirectorySeparatorChar) >= 0)
 						path = path.Replace(Separator, '/');
 					if (Separator != Path.AltDirectorySeparatorChar && path.IndexOf(Path.AltDirectorySeparatorChar) >= 0)
