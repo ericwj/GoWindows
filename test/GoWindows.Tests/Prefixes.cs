@@ -15,6 +15,7 @@ namespace GoWindows.Tests
 		[Theory]
 		[InlineData(@"\\.\unc\localhost\share", true, 8)]
 		[InlineData(@"//?/unc/localhost\share", true, 8)]
+		[InlineData(@"\??\unc\localhost\share", true, 4)]
 		[InlineData(@"\\?\C:\", true, 4)]
 		[InlineData(@"\\.\C:\", true, 4)]
 		[InlineData(@"\??\C:\", true, 4)]
