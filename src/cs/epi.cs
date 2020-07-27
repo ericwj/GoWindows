@@ -267,19 +267,20 @@ namespace GoWindows.CSharp
 			if (@this.Length < 4) goto Fail;
 			// |··|
 			if (!@this[0].IsDirectorySeparator() || !@this[3].IsDirectorySeparator()) goto Fail;
-			// ··.·
-			if (@this[2] == '.' && @this[1].IsDirectorySeparator()) goto Four;
-			// ··?·
-			if (@this[2] != '?') goto Fail;
-			// ·?·· or ·|··
-			if (!@this[1].IsDirectorySeparator() && @this[1] != '?') goto Fail;
-			// ||?|unc|
-			if (@this.Length >= 8 && @this[7].IsDirectorySeparator()) {
-				if (@this.Slice(4).StartsWith("unc", StringComparison.OrdinalIgnoreCase)) {
-					length = 8;
-					return true;
+			// ··?· or ··.·
+			if (@this[2] != '?' && @this[2] != '.') goto Fail;
+			// ·|··
+			if (@this[1].IsDirectorySeparator()) {
+				// ||?|unc|
+				if (@this.Length >= 8 && @this[7].IsDirectorySeparator()) {
+					if (@this.Slice(4).StartsWith("unc", StringComparison.OrdinalIgnoreCase)) {
+						length = 8;
+						return true;
+					}
 				}
-			}
+				goto Four;
+			} else if (@this[1] != '?')
+				goto Fail;
 		Four:
 			length = 4;
 			return true;
